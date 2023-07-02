@@ -30,3 +30,19 @@
 *.exe
 *.out
 *.app
+
+# Directories, IDEs, and special files
+build
+.workspace
+.vscode
+.idea
+.settings
+.classpath
+.project
+*.swp
+.tags
+.tags-*
+.tags-.*
+tags
+TAGS
+
