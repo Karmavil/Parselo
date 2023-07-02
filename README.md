@@ -20,6 +20,18 @@ Starting from there to adapt and customize it for my needs didn't seem to be the
 
 ---
 
+## Dependencies
+
+* GTKmm-4.0>=4.11.3 
+    
+    There have been several deprecated components in favor of new ones. Unfortunately I'm affraid that most of the users are currently using 4.8.* It's the same module but it is not going to work, sorry.
+
+* GTest v1.13.x 
+
+    This is a submule (built by the project)
+
+---
+
 ## Supported platforms
 
 Work in progress..
