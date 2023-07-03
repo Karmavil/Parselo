@@ -15,18 +15,11 @@ project(Parselo
 #set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib/shared")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
 
-# \/ Third party dependencies \/
-# Compile and link external project dependecies
-#add_subdirectory(dependencies/googletest)
-# add_subdirectory()
-
 find_package(Threads) 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTKmm REQUIRED IMPORTED_TARGET gtkmm-4.0>=gtkm-4.11.3)
 
 set(SOURCES src/main.cc src/top_level/window.cc)
-
-set(TEST tests/test_engine.cc)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(
@@ -35,11 +28,20 @@ target_include_directories(
 target_link_directories(${PROJECT_NAME} PRIVATE ${GTKmm_LIBRARY_DIRS})
 target_link_libraries(${PROJECT_NAME} PRIVATE ${GTKmm_LIBRARIES})
 
-if (NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+if(NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     target_link_directories(${PROJECT_NAME} PRIVATE Threads::Threads)
     message("Threads enabled")
 endif()
 
+# Testing
+enable_testing()
+if(CMAKE_TESTING_ENABLED)
+    if (POLICY CMP0110)
+        cmake_policy(SET CMP0110 NEW)
+    endif (POLICY CMP0110)
 
-# enable_testing()
+    add_subdirectory(dependencies/gtest)
+    add_subdirectory(test)
+    add_test("Init TestParselo" TestParselo)
+endif()
 
