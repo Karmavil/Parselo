@@ -1,15 +1,16 @@
 #if !defined(PARSELO_TOPLEVEL_WINDOW_HH)
 #define PARSELO_TOPLEVEL_WINDOW_HH
 
+#include <gtkmm/button.h>
 #include <gtkmm/window.h>
 
 namespace parselo
 {
-    class Window : public Gtk::Window
+    class AppWindow : public Gtk::Window
     {
       public:
-        Window();
-        ~Window();
+        AppWindow();
+        virtual ~AppWindow();
 
       protected:
         // Protected methods and properties

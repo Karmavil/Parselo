@@ -1,24 +1,23 @@
-#include "parselo/top_level/window.hh"
+#include "parselo/top_level/app_window.hh"
 #include "gtest/gtest.h"
 
 namespace parselo
 {
     namespace
     {
-        class WindowTest : public ::testing::Test
+        class AppWindowTest : public ::testing::Test
         {
           protected:
-            WindowTest()
+            AppWindowTest()
             {
             }
-            ~WindowTest() override
+            ~AppWindowTest() override
             {
             }
         };
 
-        TEST_F(WindowTest, ConstructorReturnsInstance)
+        TEST_F(AppWindowTest, ConstructorReturnsInstance)
         {
-            // Window win;
             EXPECT_NE(this, nullptr);
         }
 
