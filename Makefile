@@ -1,5 +1,5 @@
 .PHONY: all
-all: format build compile test run
+all: build format compile test run
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: clean
@@ -61,9 +61,11 @@ pre-build-control:
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: update-tags
 update-tags:
-	@ctags -f .tags -R -I __weak_aliasses --languages=+c,c++ . \
+	@ctags -f .tags -R -I __weak_aliasses --languages=+c,c++ include src \
 		${VIRTUAL_ENV}/include/gtkmm-4.0/gtkmm \
 		${VIRTUAL_ENV}/include/gtkmm-4.0/gdkmm
+	@ctags -f .tags-tests -R -I __weak_aliasses --languages=+c,c++ \
+		${PWD}/dependencies/gtest/googletest/include
 	@ctags -f .tags-cmake -R -I __weak_aliasses --languages=+cmake . \
 		/usr/share/cmake-3.25/Help
 

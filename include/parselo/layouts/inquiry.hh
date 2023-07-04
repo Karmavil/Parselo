@@ -1,21 +1,21 @@
 #if !defined(PARSELO_LAYOUTS_INQUIRY_HH)
 #define PARSELO_LAYOUTS_INQUIRY_HH
 
-#include "parser/layouts/layout.hh"
+#include <gtkmm/button.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/label.h>
 
 namespace parselo
 {
-  class Inquiry : public Layout
+  class Inquiry : public Gtk::Frame
   {
   public:
     Inquiry ();
-    ~Inquiry ();
+    virtual ~Inquiry ();
 
   protected:
-    // Protected methods and properties
-  private:
-    // Private methods and properties
-  }
+    Gtk::Label m_Label;
+  };
 
 } // namespace parselo
 

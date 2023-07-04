@@ -1,21 +1,20 @@
 #if !defined(PARSELO_LAYOUTS_PREFERENCES_HH)
 #define PARSELO_LAYOUTS_PREFERENCES_HH
 
-#include "parser/layouts/layout.hh"
+#include <gtkmm/frame.h>
+#include <gtkmm/label.h>
 
 namespace parselo
 {
-  class Preferences : public Layout
+  class Preferences : public Gtk::Frame
   {
   public:
     Preferences ();
-    ~Preferences ();
+    virtual ~Preferences ();
 
   protected:
-    // Protected methods and properties
-  private:
-    // Private methods and properties
-  }
+    Gtk::Label m_Label;
+  };
 
 } // namespace parselo
 

@@ -1,21 +1,20 @@
 #if !defined(PARSELO_LAYOUTS_ABOUT_HH)
 #define PARSELO_LAYOUTS_ABOUT_HH
 
-#include "parser/layouts/layout.hh"
+#include <gtkmm/frame.h>
+#include <gtkmm/label.h>
 
 namespace parselo
 {
-  class About : public Layout
+  class About : public Gtk::Frame
   {
   public:
     About ();
-    ~About ();
+    virtual ~About ();
 
   protected:
-    // Protected methods and properties
-  private:
-    // Private methods and properties
-  }
+    Gtk::Label m_Label;
+  };
 
 } // namespace parselo
 

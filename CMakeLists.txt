@@ -19,7 +19,7 @@ find_package(Threads)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTKmm REQUIRED IMPORTED_TARGET gtkmm-4.0>=gtkm-4.11.3)
 
-set(SOURCES src/layouts/layout.cc src/main.cc src/top_level/app_window.cc)
+set(SOURCES src/layouts/about.cc src/layouts/preferences.cc src/layouts/inquiry.cc src/main.cc src/top_level/app_window.cc)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE include ${GTKmm_INCLUDE_DIRS})
