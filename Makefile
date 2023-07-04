@@ -62,7 +62,8 @@ pre-build-control:
 .PHONY: update-tags
 update-tags:
 	@ctags -f .tags -R -I __weak_aliasses --languages=+c,c++ . \
-		${VIRTUAL_ENV}/include
+		${VIRTUAL_ENV}/include/gtkmm-4.0/gtkmm \
+		${VIRTUAL_ENV}/include/gtkmm-4.0/gdkmm
 	@ctags -f .tags-cmake -R -I __weak_aliasses --languages=+cmake . \
 		/usr/share/cmake-3.25/Help
 

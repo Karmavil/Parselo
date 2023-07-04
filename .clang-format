@@ -1,5 +1,5 @@
 ---
 Language:             Cpp
-BasedOnStyle:   Microsoft
+BasedOnStyle:         GNU 
 NamespaceIndentation: All
 
