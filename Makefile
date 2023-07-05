@@ -1,3 +1,23 @@
+#  Parselo - Query the journal about your progam.
+#  Copyright (C) 2023 Federico Gallo Herosa. https://www.terifel.com
+#  Find the full description of the license in the following URL:
+#  https://github.com/Karmavil/Parselo/blob/main/LICENSE
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License along
+#  with this program; if not, write to the Free Software Foundation, Inc.,
+#  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+
 .PHONY: all
 all: build format compile test run
 
@@ -57,17 +77,6 @@ pre-build-control:
 	@if [ ! ${PKG_CONFIG_PATH} ]; then \
 		echo "\`PKG_CONFIG_PATH\` not set" && exit 1; \
 	fi
-
-#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
-.PHONY: update-tags
-update-tags:
-	@ctags -f .tags -R -I __weak_aliasses --languages=+c,c++ include src \
-		${VIRTUAL_ENV}/include/gtkmm-4.0/gtkmm \
-		${VIRTUAL_ENV}/include/gtkmm-4.0/gdkmm
-	@ctags -f .tags-tests -R -I __weak_aliasses --languages=+c,c++ \
-		${PWD}/dependencies/gtest/googletest/include
-	@ctags -f .tags-cmake -R -I __weak_aliasses --languages=+cmake . \
-		/usr/share/cmake-3.25/Help
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 
