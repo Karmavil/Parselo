@@ -19,8 +19,8 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#if !defined(PARSELO_LAYOUTS_PREFERENCES_HH)
-#define PARSELO_LAYOUTS_PREFERENCES_HH
+#if !defined(PARSELO_CONTAINERS_PREFERENCES_HH)
+#define PARSELO_CONTAINERS_PREFERENCES_HH
 
 #include <gtkmm/frame.h>
 #include <gtkmm/label.h>
@@ -39,4 +39,4 @@ namespace parselo
 
 } // namespace parselo
 
-#endif // PARSELO_LAYOUTS_PREFERENCES_HH
+#endif // PARSELO_CONTAINERS_PREFERENCES_HH

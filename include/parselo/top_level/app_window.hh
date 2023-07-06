@@ -24,9 +24,7 @@
 
 #include <gtkmm/box.h>
 #include <gtkmm/frame.h>
-#include <gtkmm/label.h>
 #include <gtkmm/notebook.h>
-#include <gtkmm/paned.h>
 #include <gtkmm/window.h>
 #include <iostream>
 
