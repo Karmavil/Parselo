@@ -19,12 +19,12 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#include "parselo/layouts/preferences.hh"
+#include "parselo/containers/inquiry.hh"
 
-parselo::Preferences::Preferences ()
+parselo::Inquiry::Inquiry ()
 {
-  m_Label.set_text ("And here you set your Preferences");
+  m_Label.set_text ("Inquiries are made here");
   set_child (m_Label);
 }
 
-parselo::Preferences::~Preferences () {}
+parselo::Inquiry::~Inquiry () {}

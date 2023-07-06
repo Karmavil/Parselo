@@ -20,9 +20,9 @@
 *************************************************************************/
 
 #include "parselo/top_level/app_window.hh"
-#include "parselo/layouts/about.hh"
-#include "parselo/layouts/inquiry.hh"
-#include "parselo/layouts/preferences.hh"
+#include "parselo/containers/about.hh"
+#include "parselo/containers/inquiry.hh"
+#include "parselo/containers/preferences.hh"
 #include <gtkmm/eventcontrollerkey.h>
 
 parselo::AppWindow::AppWindow ()

@@ -18,12 +18,13 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
-#include "parselo/layouts/inquiry.hh"
 
-parselo::Inquiry::Inquiry ()
+#include "parselo/containers/about.hh"
+
+parselo::About::About ()
 {
-  m_Label.set_text ("Inquiries are made here");
+  m_Label.set_text ("About this program and how to use it");
   set_child (m_Label);
 }
 
-parselo::Inquiry::~Inquiry () {}
+parselo::About::~About () {}

@@ -22,8 +22,8 @@
 #if !defined(PARSELO_TOPLEVEL_WINDOW_HH)
 #define PARSELO_TOPLEVEL_WINDOW_HH
 
-#include "parselo/layouts/about.hh"
 #include <gtkmm/box.h>
+#include <gtkmm/frame.h>
 #include <gtkmm/label.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/paned.h>
