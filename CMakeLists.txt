@@ -39,17 +39,15 @@ find_package(Threads)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTKmm REQUIRED IMPORTED_TARGET gtkmm-4.0>=gtkm-4.11.3)
 
-set(SOURCES src/containers/about.cc src/containers/preferences.cc src/containers/inquiry.cc src/main.cc src/top_level/app_window.cc)
+add_subdirectory(src/gui)
+
+set(SOURCES src/main.cc)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
-target_include_directories(${PROJECT_NAME} PRIVATE include ${GTKmm_INCLUDE_DIRS})
+target_include_directories(${PROJECT_NAME} PRIVATE ./include src/gui/headers ${GTKmm_INCLUDE_DIRS})
 target_link_directories(${PROJECT_NAME} PRIVATE ${GTKmm_LIBRARY_DIRS})
-target_link_libraries(${PROJECT_NAME} PRIVATE ${GTKmm_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE AppGUI ${GTKmm_LIBRARIES})
 
-if(NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-    target_link_directories(${PROJECT_NAME} PRIVATE Threads::Threads)
-    message("Threads enabled")
-endif()
 
 # Testing
 enable_testing()

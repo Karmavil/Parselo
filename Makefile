@@ -30,14 +30,22 @@ clean:
 .PHONY: format
 format:
 	@clang-format -i `find include/ -type f -name *.hh`
+	@clang-format -i `find src/ -type f -name *.hh`
 	@clang-format -i `find src/ -type f -name *.cc`
 	@clang-format -i `find test/ -type f -name *.cc`
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: update-sources-list
 update-sources-list:
-	@SOURCES=`find src/ -type f -name *.cc` && \
-		sed -i -E -e "s%set\((SOURCES)[^)]*\)%set(\1 `echo $$SOURCES`)%" CMakeLists.txt
+	@SOURCES=`find src/ -type f -name *.cc -not -path "src/gui/*"` \
+		&& sed -i -E -e \
+			"s%set\((SOURCES)[^)]*\)%set(\1 `echo $$SOURCES`)%" \
+			CMakeLists.txt
+	@cd src/gui && \
+		LIB_SOURCES=`find . -type f -name *.cc` && \
+		sed -i -E -e \
+			"s%set\((LIB_SOURCES)[^)]*\)%set(\1 `echo $$LIB_SOURCES`)%" \
+			./CMakeLists.txt
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: build
@@ -65,6 +73,16 @@ test:
 .PHONY: run
 run:
 	@./build/bin/Parselo
+
+#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
+.PHONY: debug
+debug:
+	gdb build/bin/Parselo
+
+#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
+.PHONY: debug-test
+debug-test:
+	gdb build/bin/TestParselo
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 pre-build-control:

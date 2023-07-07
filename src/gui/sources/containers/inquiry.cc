@@ -19,25 +19,12 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#if !defined(PARSELO_CONTAINERS_ABOUT_HH)
-#define PARSELO_CONTAINERS_ABOUT_HH
+#include "containers/inquiry.hh"
 
-#include <gtkmm/frame.h>
-#include <gtkmm/label.h>
-
-namespace parselo
+parselo::Inquiry::Inquiry ()
 {
-  class About : public Gtk::Frame
-  {
-  public:
-    About ();
-    virtual ~About ();
+  m_Label.set_text ("Inquiries are made here");
+  set_child (m_Label);
+}
 
-  protected:
-    Gtk::Frame m_Frame;
-    Gtk::Label m_Label;
-  };
-
-} // namespace parselo
-
-#endif // PARSELO_CONTAINERS_ABOUT_HH
+parselo::Inquiry::~Inquiry () {}

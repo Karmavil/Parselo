@@ -19,7 +19,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#include "parselo/containers/about.hh"
+#include "containers/about.hh"
 
 parselo::About::About ()
 {

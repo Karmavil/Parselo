@@ -19,12 +19,43 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#include "parselo/containers/inquiry.hh"
+#if !defined(PARSELO_TOPLEVEL_WINDOW_HH)
+#define PARSELO_TOPLEVEL_WINDOW_HH
 
-parselo::Inquiry::Inquiry ()
+#include <glibmm/ustring.h>
+#include <gtkmm/box.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/label.h>
+#include <gtkmm/notebook.h>
+#include <gtkmm/window.h>
+#include <vector>
+
+#include <iostream>
+
+namespace parselo
 {
-  m_Label.set_text ("Inquiries are made here");
-  set_child (m_Label);
-}
+  class AppWindow : public Gtk::Window
+  {
+  public:
+    AppWindow ();
+    virtual ~AppWindow ();
 
-parselo::Inquiry::~Inquiry () {}
+#if defined(DEBUG)
+    Glib::ustring getNameOfActivePage ();
+    Glib::ustring getNameOfPageAtIndex (uint8_t index);
+#endif
+
+  protected:
+    Gtk::Box m_VBox;
+    Gtk::Notebook m_Notebook;
+    Gtk::Frame m_FrameAbout;
+    Gtk::Frame m_FrameInquiry;
+    Gtk::Frame m_FramePreferences;
+
+    void on_notebook_switch_page (Gtk::Widget *page, guint page_num);
+    bool on_escape_key_pressed (guint keyval, guint keycode,
+                                Gdk::ModifierType state);
+  };
+} // namespace parselo
+
+#endif // PARSELO_TOPLEVEL_WINDOW_HH

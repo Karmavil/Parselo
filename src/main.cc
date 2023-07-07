@@ -19,7 +19,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#include "parselo/top_level/app_window.hh"
+#include "top_level/app_window.hh"
 #include <gtkmm/application.h>
 
 int

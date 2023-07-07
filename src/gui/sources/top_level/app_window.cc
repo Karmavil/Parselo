@@ -19,37 +19,40 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#include "parselo/top_level/app_window.hh"
-#include "parselo/containers/about.hh"
-#include "parselo/containers/inquiry.hh"
-#include "parselo/containers/preferences.hh"
+#include "top_level/app_window.hh"
+#include "containers/about.hh"
+#include "containers/inquiry.hh"
+#include "containers/preferences.hh"
 #include <gtkmm/eventcontrollerkey.h>
+#include <iostream>
 
 parselo::AppWindow::AppWindow ()
 {
-  // Handler for even key-ESC-pressed (for exit)
-  auto controller = Gtk::EventControllerKey::create ();
-  controller->signal_key_pressed ().connect (
-      sigc::mem_fun (*this, &parselo::AppWindow::on_escape_key_pressed),
-      false);
-  add_controller (controller);
-
+  set_title ("Parselo");
   set_default_size (300, 300);
   set_size_request (800, 600);
 
-  m_VBox.set_orientation (Gtk::Orientation::VERTICAL);
-  set_child (m_VBox);
+  // Handler for even key-ESC-pressed (for exit)
+  auto controller = Gtk::EventControllerKey::create ();
+  add_controller (controller);
+  controller->signal_key_pressed ().connect (
+      sigc::mem_fun (*this, &parselo::AppWindow::on_escape_key_pressed),
+      false);
 
+  set_child (m_VBox);
+  m_VBox.set_orientation (Gtk::Orientation::VERTICAL);
+
+  m_VBox.append (m_Notebook);
   m_Notebook.set_margin (10);
   m_Notebook.set_expand ();
-  m_VBox.append (m_Notebook);
 
   auto about = Gtk::make_managed<About> ();
-  auto inquiries = Gtk::make_managed<Inquiry> ();
-  auto preferences = Gtk::make_managed<Preferences> ();
-
   m_Notebook.append_page (*about, "About");
+
+  auto inquiries = Gtk::make_managed<Inquiry> ();
   m_Notebook.append_page (*inquiries, "Inquiry");
+
+  auto preferences = Gtk::make_managed<Preferences> ();
   m_Notebook.append_page (*preferences, "Preferences");
 
   m_Notebook.signal_switch_page ().connect (
@@ -70,5 +73,27 @@ parselo::AppWindow::on_escape_key_pressed (guint keyval, guint keycode,
 void
 parselo::AppWindow::on_notebook_switch_page (Gtk::Widget *page, guint page_num)
 {
-  // std::cout << "Switched to " << page_num << ": " << std::endl;
+  // auto label = m_Notebook.get_tab_label (*page);
+  // Glib::ustring label_text = ((Gtk::Label *)label)->get_text ();
+  // TODO: if page == "Inquiry" save buffer
 }
+
+#if defined(DEBUG)
+Glib::ustring
+parselo::AppWindow::getNameOfActivePage ()
+{
+  auto idx = m_Notebook.get_current_page ();
+  return getNameOfPageAtIndex (idx);
+}
+#endif
+
+#if defined(DEBUG)
+Glib::ustring
+parselo::AppWindow::getNameOfPageAtIndex (uint8_t index)
+{
+  auto page = m_Notebook.get_nth_page (index);
+  auto label = m_Notebook.get_tab_label (*page);
+  auto value = ((Gtk::Label *)label)->get_text ();
+  return value;
+}
+#endif
