@@ -25,9 +25,12 @@ BUILD_TYPE=Debug
 JOBS=-j4
 SUPP_GTK=/usr/share/gtk-4.0/valgrind/gtk.supp
 SUPP_GLIB=/usr/share/glib-2.0/valgrind/glib.supp
+DEPRECATED_AFTER_4_10= AppChooser AppChooserButton AppChooserDialog AppChooserWidget CellArea CellAreaBox CellAreaContext CellLayout CellRenderer CellRendererAccel CellRendererCombo CellRendererPixbuf CellRendererProgress CellRendererSpin CellRendererSpinner CellRendererText CellRendererToggle CellView ComboBox ComboBoxText EntryCompletion IconView ListStore ListViewText StyleContext TreeDragDest TreeDragSource TreeIter TreeModel TreeModelFilter TreeModelSort TreePath TreeRowReference TreeSelection TreeSortable TreeStore TreeView TreeViewColumn ColorButton ColorChooser ColorChooserDialog FileChooser FileChooserDialog FileChooserNative FileChooserWidget FontButton FontChooser FontChooserDialog FontChooserWidget MessageDialog TreeModelColumn TreeModelColumnRecord InfoBar Assistant AssistantPage LockButton Statusbar VolumeButton
+MORE_ABOUT_DEPRECATIONS="https://gnome.pages.gitlab.gnome.org/gtkmm-documentation/changes-gtkmm4.html#sec-deprecations-4-10"
+
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: all
-all: build format compile test run
+all: build format compile test warn-deprecations  run
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: clean
@@ -112,6 +115,23 @@ memcheck:
 			echo "--log-file=build/vgdump/Parselo.txt"; \
 			echo "build/bin/Parselo"; \
 		fi`
+
+#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
+warn-deprecations:
+	@WARNED=0 && echo "" && for widget in ${DEPRECATED_AFTER_4_10}; \
+		do \
+			_X_=`grep -rn --binary-files=without-match "$$widget" src/`; \
+			if [ "$$_X_" ]; then \
+				WARNED=1 && \
+				echo "|\033[93mWARNING\033[00m| Frienldy reminder: " && \
+				echo "Possible deprecation for: $$widget was found at" && \
+				echo "$$_X_"; \
+			fi \
+		done && \
+		if [ $$WARNED -gt 0 ]; then \
+			echo "Check the following URL for more information: " && \
+			echo "${ABOUT_DEPRECATIONS}"; \
+		fi
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 
