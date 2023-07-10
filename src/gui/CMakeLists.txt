@@ -18,7 +18,7 @@
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
-set(LIB_SOURCES ./sources/containers/about.cc ./sources/containers/preferences.cc ./sources/containers/decobutton.cc ./sources/containers/inquiry.cc ./sources/top_level/app_window.cc)
+set(LIB_SOURCES ./sources/components/about.cc ./sources/components/preferences.cc ./sources/components/decobutton.cc ./sources/components/inquiry.cc ./sources/windows/app_window.cc)
 
 set(LIBNAME parselo_interface)
 

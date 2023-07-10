@@ -19,10 +19,10 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#include "top_level/app_window.hh"
-#include "containers/about.hh"
-#include "containers/inquiry.hh"
-#include "containers/preferences.hh"
+#include "windows/app_window.hh"
+#include "components/about.hh"
+#include "components/inquiry.hh"
+#include "components/preferences.hh"
 #include <gtkmm/eventcontrollerkey.h>
 #include <gtkmm/label.h>
 #include <iostream>

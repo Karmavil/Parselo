@@ -19,7 +19,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#include "containers/decobutton.hh"
+#include "components/decobutton.hh"
 #include <filesystem>
 #include <gtkmm/box.h>
 #include <gtkmm/image.h>

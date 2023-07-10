@@ -19,12 +19,12 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#include "containers/about.hh"
+#include "components/preferences.hh"
 
-parselo::About::About ()
+parselo::Preferences::Preferences ()
 {
-  m_Label.set_text ("About this program and how to use it");
+  m_Label.set_text ("And here you set your Preferences");
   set_child (m_Label);
 }
 
-parselo::About::~About () {}
+parselo::Preferences::~Preferences () {}

@@ -19,7 +19,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#include "top_level/app_window.hh"
+#include "windows/app_window.hh"
 #include "gtest/gtest.h"
 #include <gtkmm/application.h>
 #include <iostream>

@@ -19,8 +19,8 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#include "containers/inquiry.hh"
-#include "containers/decobutton.hh"
+#include "components/inquiry.hh"
+#include "components/decobutton.hh"
 #include <iostream>
 
 parselo::Inquiry::Inquiry ()
