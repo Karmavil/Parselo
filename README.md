@@ -2,11 +2,11 @@
 
 ### What is it? 
 
-Parselo is both an application and a library. Meaning, once it is successfully built and tested it should be ready for both:
+Parselo is both an application and library. Meaning, once it is successfully built and tested it should be ready for both:
 
 * Run as a standalone application
 
-* Be incorporated into an existing application that uses GTK. Like a window widget of functionalities you open from the menus of your application. 
+* Be incorporated into an existing application that uses GTK. Like a window widget of functionalities you can open from the menu of your application once it's integrated to do so. 
 
 ### What it does? 
 
@@ -20,27 +20,15 @@ This work started as a personal initiative to facilitate the readability of logs
 
 As a graphical interface it aims to facilitate the arrangement and filtering of what you want to see and how. The main idea is to avoid changing the code that generates those logs but instead parse them and arrange the view as you like.
 
-### But, I have installed `Logs` for that already, and it is great!
-
-That's right. However it's focused on your hole system, and it is a project in a much more advanced stage of development.
-
-Starting from there to adapt and customize it for my needs didn't seem to be the way to go (IMO). Besides this is just a side project conceived as a path to become more familiar with the development of Mir. This is just some personal challenge made public.
-
 ---
 
 ## Dependencies
 
-* GTKmm-4.0>=4.11.3 
+* GTKmm-4.0
     
-    There have been several deprecated components in favor of new ones. Unfortunately I'm affraid that most of the users are currently using 4.8.* It's the same module but it is not going to work, sorry.
-
-* GTest v1.13.x 
-
-    This is a submule (built by the project)
-
 ---
 
 ## Supported platforms
 
-Work in progress..
+So far it has been tested only on Debian. At the moment, it's not like there's much to test either
 
