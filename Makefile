@@ -20,6 +20,12 @@
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
+#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
+BUILD_TYPE=Debug
+JOBS=-j4
+SUPP_GTK=/usr/share/gtk-4.0/valgrind/gtk.supp
+SUPP_GLIB=/usr/share/glib-2.0/valgrind/glib.supp
+#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: all
 all: build format compile test run
 
@@ -51,7 +57,7 @@ update-sources-list:
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: build
-build: pre-build-control update-sources-list
+build: update-sources-list
 	@mkdir -p build && \
 		cd build && \
 		cmake -DCMAKE_BUILD_TYPE:STRING=${BUILD_TYPE} ..
@@ -64,7 +70,7 @@ rebuild: clean all
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: compile
 compile:
-	@mkdir -p build && cd build && make -j4
+	@mkdir -p build && cd build && make ${JOBS}
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: test
@@ -95,8 +101,8 @@ memcheck:
 		--num-callers=20 \
 		--show-leak-kinds=all \
 		--show-error-list=no \
-		--suppressions=`find ${VIRTUAL_ENV} -type f -name gtk.supp` \
-		--suppressions=`find ${VIRTUAL_ENV} -type f -name glib.supp` \
+		--suppressions=${SUPP_GTK} \
+		--suppressions=${SUPP_GLIB} \
 		--log-file=build/vgdump.txt \
 		`if [ $(t) ]; \
 		then \
@@ -106,15 +112,6 @@ memcheck:
 			echo "--log-file=build/vgdump/Parselo.txt"; \
 			echo "build/bin/Parselo"; \
 		fi`
-
-#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
-pre-build-control:
-	@if [ ! ${BUILD_TYPE} ]; then \
-		echo "\`BUILD_TYPE\` not set" && exit 1; fi
-	@if [ ! ${CMAKE_PREFIX_PATH} ]; then \
-		echo "\`CMAKE_PREFIX_PATH\` not set" fi && exit 1; fi
-	@if [ ! ${PKG_CONFIG_PATH} ]; then \
-		echo "\`PKG_CONFIG_PATH\` not set" && exit 1; fi
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 

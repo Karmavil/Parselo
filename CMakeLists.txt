@@ -37,7 +37,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
 
 find_package(Threads) 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(GTKmm REQUIRED IMPORTED_TARGET gtkmm-4.0>=gtkm-4.11.3)
+pkg_check_modules(GTKmm REQUIRED IMPORTED_TARGET gtkmm-4.0)
 
 add_subdirectory(src/gui)
 
