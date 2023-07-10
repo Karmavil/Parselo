@@ -20,11 +20,46 @@
 *************************************************************************/
 
 #include "containers/inquiry.hh"
+#include "containers/decobutton.hh"
+#include <iostream>
 
 parselo::Inquiry::Inquiry ()
 {
+  void set_orientation (Gtk::Orientation orientation);
+  void set_spacing (int spacing);
+  void set_homogeneous (bool homogeneous = true);
+  set_child (m_VBox);
+
+  auto open_file_btn
+      = Gtk::make_managed<parselo::DecoButton> ("Open file", "document-open");
+  open_file_btn->onBtnClicked ().connect (
+      sigc::mem_fun (*this, &Inquiry::onOpenFileButtonClicked));
+
+  auto paste_btn
+      = Gtk::make_managed<parselo::DecoButton> ("Paste", "edit-paste");
+  paste_btn->onBtnClicked ().connect (
+      sigc::mem_fun (*this, &Inquiry::onPasteButtonClicked));
+
+  m_HBox.set_orientation (Gtk::Orientation::HORIZONTAL);
+  m_HBox.append (*open_file_btn);
+  m_HBox.append (*paste_btn);
+
+  m_VBox.set_orientation (Gtk::Orientation::VERTICAL);
+  m_VBox.append (m_HBox);
+  m_VBox.append (m_Label);
   m_Label.set_text ("Inquiries are made here");
-  set_child (m_Label);
 }
 
 parselo::Inquiry::~Inquiry () {}
+
+void
+parselo::Inquiry::onOpenFileButtonClicked ()
+{
+  std::cout << "File requested" << std::endl;
+}
+
+void
+parselo::Inquiry::onPasteButtonClicked ()
+{
+  std::cout << "Paste contents" << std::endl;
+}

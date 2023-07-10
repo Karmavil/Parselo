@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 #  Parselo - Query the journal about your progam.
 #  Copyright (C) 2023 Federico Gallo Herosa. https://www.terifel.com
 #  Find the full description of the license in the following URL:
@@ -85,16 +87,34 @@ debug-test:
 	gdb build/bin/TestParselo
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
+.PHONY: memcheck
+memcheck:
+	@mkdir -p build/vgdump
+	@valgrind \
+		--leak-check=full \
+		--num-callers=20 \
+		--show-leak-kinds=all \
+		--show-error-list=no \
+		--suppressions=`find ${VIRTUAL_ENV} -type f -name gtk.supp` \
+		--suppressions=`find ${VIRTUAL_ENV} -type f -name glib.supp` \
+		--log-file=build/vgdump.txt \
+		`if [ $(t) ]; \
+		then \
+			echo "--log-file=build/vgdump/TestParselo.txt"; \
+			echo "build/bin/TestParselo"; \
+		else \
+			echo "--log-file=build/vgdump/Parselo.txt"; \
+			echo "build/bin/Parselo"; \
+		fi`
+
+#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 pre-build-control:
 	@if [ ! ${BUILD_TYPE} ]; then \
-		echo "\`BUILD_TYPE\` not set" && exit 1; \
-	fi
-	@if [ ! ${CMAKE_PREFIX_PATH} ]; then	\
-		echo "\`CMAKE_PREFIX_PATH\` not set" fi && exit 1; \
-	fi
+		echo "\`BUILD_TYPE\` not set" && exit 1; fi
+	@if [ ! ${CMAKE_PREFIX_PATH} ]; then \
+		echo "\`CMAKE_PREFIX_PATH\` not set" fi && exit 1; fi
 	@if [ ! ${PKG_CONFIG_PATH} ]; then \
-		echo "\`PKG_CONFIG_PATH\` not set" && exit 1; \
-	fi
+		echo "\`PKG_CONFIG_PATH\` not set" && exit 1; fi
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 

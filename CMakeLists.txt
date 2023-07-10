@@ -31,8 +31,8 @@ project(Parselo
 )
 
 # Control where the static and shared libraries are built
-#set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib/static")
-#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib/shared")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
 
 find_package(Threads) 
@@ -46,7 +46,7 @@ set(SOURCES src/main.cc)
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ./include src/gui/headers ${GTKmm_INCLUDE_DIRS})
 target_link_directories(${PROJECT_NAME} PRIVATE ${GTKmm_LIBRARY_DIRS})
-target_link_libraries(${PROJECT_NAME} PRIVATE AppGUI ${GTKmm_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE parselo_interface ${GTKmm_LIBRARIES})
 
 
 # Testing

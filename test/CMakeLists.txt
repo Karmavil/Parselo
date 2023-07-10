@@ -28,7 +28,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 add_executable(${TEST_EXE} ${TEST_SOURCES})
 target_include_directories(${TEST_EXE} PRIVATE src/gui/headers GoogleTest ${GTKmm_INCLUDE_DIRS})
 target_link_directories(${TEST_EXE} PRIVATE ${GTKmm_LIBRARY_DIRS})
-target_link_libraries(${TEST_EXE} PRIVATE AppGUI gtest ${GTKmm_LIBRARIES})
+target_link_libraries(${TEST_EXE} PRIVATE parselo_interface gtest ${GTKmm_LIBRARIES})
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     target_compile_definitions(${TEST_EXE} PRIVATE DEBUG=1)
