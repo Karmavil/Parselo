@@ -35,54 +35,44 @@ namespace parselo
       AppWindow *m_window;
       AppWindowTest ()
       {
-        //     std::cout
-        //         << "AppWindowTedt should be creating a new instance for
-        //         every test"
-        //         << std::endl;
-
         m_App = Gtk::Application::create ("com.terifel.parselo");
-        //    m_App->run ();
+        m_App->run ();
 
-        //    // Call AppWindow constructor
-        //    auto window = Gtk::make_managed<AppWindow> ();
-        //    m_window = window;
+        // Call AppWindow constructor
+        auto window = Gtk::make_managed<AppWindow> ();
+        m_window = window;
       }
       ~AppWindowTest () override
       {
-        //    std::cout << "AppWindowTest is being destroyed however AppWindow
-        //    is "
-        //                 "only at the end"
-        //              << std::endl;
-        //    // Call ~AppWinidow destructor
-        //    m_window = nullptr;
+        // Call ~AppWinidow destructor
+        m_window = nullptr;
       }
     };
 
-    // TEST_F (AppWindowTest, AppStarted)
-    //{
-    //   EXPECT_NE (m_App, nullptr);
-    //   EXPECT_NE (m_window, nullptr);
-    // }
+    TEST_F (AppWindowTest, AppStarted)
+    {
+      EXPECT_NE (m_App, nullptr);
+      EXPECT_NE (m_window, nullptr);
+    }
 
-    // TEST_F (AppWindowTest, WindowTitleIsAsExpected)
-    //{
-    //   auto title = m_window->get_title ();
-    //   EXPECT_EQ (title, "Parselo");
-    // }
+    TEST_F (AppWindowTest, WindowTitleIsAsExpected)
+    {
+      auto title = m_window->get_title ();
+      EXPECT_EQ (title, "Parselo");
+    }
 
-    //#if defined(DEBUG) && DEBUG == 1
-    //    TEST_F (AppWindowTest, AboutIsTheDefaultPage)
-    //    {
-    //      Glib::ustring page_title = m_window->getNameOfActivePage ();
-    //      bool user_preference = false; // TODO
-    //      if (user_preference)
-    //        EXPECT_EQ (page_title, "Whatever");
-    //      else
-    //        EXPECT_EQ (page_title, "About");
-    //    }
-    //#endif
+#if defined(DEBUG) && DEBUG == 1
+    TEST_F (AppWindowTest, AboutIsTheDefaultPage)
+    {
+      Glib::ustring page_title = m_window->getNameOfActivePage ();
+      bool user_preference = false; // TODO
+      if (user_preference)
+        EXPECT_EQ (page_title, "Whatever");
+      else
+        EXPECT_EQ (page_title, "About");
+    }
+#endif
 
-    TEST_F (AppWindowTest, Simple) { EXPECT_EQ (1, 1); }
   } // namespace
 } // namespace parselo
 

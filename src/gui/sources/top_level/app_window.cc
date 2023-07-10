@@ -24,6 +24,7 @@
 #include "containers/inquiry.hh"
 #include "containers/preferences.hh"
 #include <gtkmm/eventcontrollerkey.h>
+#include <gtkmm/label.h>
 #include <iostream>
 
 parselo::AppWindow::AppWindow ()
