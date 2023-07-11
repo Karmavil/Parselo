@@ -60,7 +60,7 @@ parselo::AppWindow::AppWindow ()
       sigc::mem_fun (*this, &AppWindow::on_notebook_switch_page));
 }
 
-parselo::AppWindow::~AppWindow () { std::cout << "Cleaning" << std::endl; }
+parselo::AppWindow::~AppWindow () {}
 
 bool
 parselo::AppWindow::on_escape_key_pressed (guint keyval, guint keycode,

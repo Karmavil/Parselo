@@ -23,14 +23,15 @@
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 BUILD_TYPE=Debug
 JOBS=-j4
-SUPP_GTK=/usr/share/gtk-4.0/valgrind/gtk.supp
-SUPP_GLIB=/usr/share/glib-2.0/valgrind/glib.supp
+PFIX=`if [ ${VIRTUAL_ENV} ]; then echo ${VIRTUAL_ENV}; else echo /usr; fi`
+SUPP_GTK=${PFIX}/share/gtk-4.0/valgrind/gtk.supp
+SUPP_GLIB=${PFIX}/share/glib-2.0/valgrind/glib.supp
 DEPRECATED_AFTER_4_10= AppChooser AppChooserButton AppChooserDialog AppChooserWidget CellArea CellAreaBox CellAreaContext CellLayout CellRenderer CellRendererAccel CellRendererCombo CellRendererPixbuf CellRendererProgress CellRendererSpin CellRendererSpinner CellRendererText CellRendererToggle CellView ComboBox ComboBoxText EntryCompletion IconView ListStore ListViewText StyleContext TreeDragDest TreeDragSource TreeIter TreeModel TreeModelFilter TreeModelSort TreePath TreeRowReference TreeSelection TreeSortable TreeStore TreeView TreeViewColumn ColorButton ColorChooser ColorChooserDialog FileChooser FileChooserDialog FileChooserNative FileChooserWidget FontButton FontChooser FontChooserDialog FontChooserWidget MessageDialog TreeModelColumn TreeModelColumnRecord InfoBar Assistant AssistantPage LockButton Statusbar VolumeButton
 MORE_ABOUT_DEPRECATIONS="https://gnome.pages.gitlab.gnome.org/gtkmm-documentation/changes-gtkmm4.html\#sec-deprecations-4-10"
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: all
-all: build format compile test warn-deprecations  run
+all: build format compile test warn-deprecations run
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: clean
@@ -99,22 +100,30 @@ debug-test:
 .PHONY: memcheck
 memcheck:
 	@mkdir -p build/vgdump
-	@valgrind \
-		--leak-check=full \
-		--num-callers=20 \
-		--show-leak-kinds=all \
-		--show-error-list=no \
-		--suppressions=${SUPP_GTK} \
-		--suppressions=${SUPP_GLIB} \
-		--log-file=build/vgdump.txt \
-		`if [ $(t) ]; \
-		then \
-			echo "--log-file=build/vgdump/TestParselo.txt"; \
-			echo "build/bin/TestParselo"; \
-		else \
-			echo "--log-file=build/vgdump/Parselo.txt"; \
-			echo "build/bin/Parselo"; \
-		fi`
+	@if [ ${full} ]; then \
+		valgrind \
+			--leak-check=full \
+			--num-callers=6 \
+			--show-leak-kinds=all \
+			--show-error-list=yes \
+			--suppressions=${SUPP_GTK} \
+			--suppressions=${SUPP_GLIB} \
+			--log-file=build/vgdump.txt \
+			`if [ ${test} -eq 1 ]; then \
+				echo "--log-file=build/vgdump/TestParselo.txt"; \
+				echo "build/bin/TestParselo"; \
+			else \
+				echo "--log-file=build/vgdump/Parselo.txt"; \
+				echo "build/bin/Parselo"; \
+			fi`; \
+	else \
+		valgrind --show-error-list=yes \
+			`if [ ${test} -eq 1 ]; then \
+				echo "build/bin/TestParselo"; \
+			else \
+				echo "build/bin/Parselo"; \
+			fi`; \
+	fi
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 warn-deprecations:

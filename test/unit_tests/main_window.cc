@@ -38,16 +38,16 @@ namespace parselo
         m_App = Gtk::Application::create ("com.terifel.parselo");
         m_App->run ();
 
-        // Call AppWindow constructor
-        auto window = Gtk::make_managed<AppWindow> ();
-        m_window = window;
+        // Calls AppWindow
+        m_window = new AppWindow ();
       }
       ~AppWindowTest () override
       {
-        // Call ~AppWinidow destructor
-        m_window = nullptr;
+        // Calls ~AppWindow
+        delete m_window;
       }
     };
+    TEST_F (AppWindowTest, Simple) { EXPECT_TRUE (1); }
 
     TEST_F (AppWindowTest, AppStarted)
     {
