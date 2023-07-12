@@ -26,6 +26,7 @@
 #include <gtkmm/box.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/notebook.h>
+#include <gtkmm/widget.h>
 #include <gtkmm/window.h>
 
 namespace parselo

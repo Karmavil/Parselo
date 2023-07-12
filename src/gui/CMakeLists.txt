@@ -17,8 +17,7 @@
 #  with this program; if not, write to the Free Software Foundation, Inc.,
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-
-set(LIB_SOURCES ./sources/components/about.cc ./sources/components/preferences.cc ./sources/components/decobutton.cc ./sources/components/inquiry.cc ./sources/windows/app_window.cc)
+set(LIB_SOURCES ./sources/components/nb_pages/about.cc ./sources/components/nb_pages/preferences.cc ./sources/components/nb_pages/inquiry.cc ./sources/components/buttons/decobutton.cc ./sources/windows/app_window.cc)
 
 set(LIBNAME parselo_interface)
 

@@ -27,6 +27,18 @@
 #include <gtkmm/label.h>
 #include <iostream>
 
+#if !defined SHIFT
+#define SHIFT Gdk::ModifierType::SHIFT_MASK
+#endif
+
+#if !defined CTRL
+#define CTRL Gdk::ModifierType::CONTROL_MASK
+#endif
+
+#if !defined ALT
+#define ALT Gdk::ModifierType::ALT_MASK
+#endif
+
 parselo::AppWindow::AppWindow ()
 {
   set_title ("Parselo");
@@ -68,6 +80,33 @@ parselo::AppWindow::on_escape_key_pressed (guint keyval, guint keycode,
 {
   if (keyval == GDK_KEY_Escape)
     this->close ();
+  else
+    {
+      // TODO: This still needs polishing because in certain
+      // combinations it doesn manage appropriately:
+      // i.e. when pressing Shift before Ctrl or Alt it still consider
+      // those last as keyval/keycode.
+      bool isShiftPressed = (state & SHIFT) == SHIFT;
+      bool isCtrlPressed = (state & CTRL) == CTRL;
+      bool isAltPressed = (state & ALT) == ALT;
+
+      // Check for combinations of two keys (excluding Alt+Ctrl+Shift)
+      if ((isShiftPressed && isCtrlPressed) || (isShiftPressed && isAltPressed)
+          || (isCtrlPressed && isAltPressed))
+        {
+          // Handle combination of two keys
+          return true;
+        }
+      else if (isShiftPressed || isCtrlPressed || isAltPressed)
+        {
+          if (isShiftPressed && !(isCtrlPressed || isAltPressed))
+            {
+              // Handle individual key press
+              if (keyval && keycode)
+                return true; // TODO obviously
+            }
+        }
+    }
   return false;
 }
 
@@ -77,6 +116,12 @@ parselo::AppWindow::on_notebook_switch_page (Gtk::Widget *page, guint page_num)
   // auto label = m_Notebook.get_tab_label (*page);
   // Glib::ustring label_text = ((Gtk::Label *)label)->get_text ();
   // TODO: if page == "Inquiry" save buffer
+  //
+  // TODO: Why am I doing this? The pages should be NotebookPages at this
+  // point and there should be an specialized Notebook class.
+  // In the situation of changing notebook-pages for frames for example its
+  // funcionality could be distributed or reutilized with a different
+  // class easily.
 }
 
 #if defined(DEBUG)
