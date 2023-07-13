@@ -41,7 +41,7 @@ clean:
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: format
 format:
-	@clang-format -i `find include/ -type f -name *.hh`
+	@clang-format -i `find include/ -type f -name *.hh` src/main.cc # (added main.cc because while writing this note the include folder is empty)
 	@clang-format -i `find src/ -type f -name *.hh`
 	@clang-format -i `find src/ -type f -name *.cc`
 	@clang-format -i `find test/ -type f -name *.cc`

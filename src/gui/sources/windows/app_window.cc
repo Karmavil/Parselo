@@ -20,9 +20,9 @@
 *************************************************************************/
 
 #include "windows/app_window.hh"
-#include "components/nb_pages/about.hh"
-#include "components/nb_pages/inquiry.hh"
-#include "components/nb_pages/preferences.hh"
+#include "components/notebooks/pages/about.hh"
+#include "components/notebooks/pages/inquiry.hh"
+#include "components/notebooks/pages/preferences.hh"
 #include <gtkmm/eventcontrollerkey.h>
 #include <gtkmm/label.h>
 #include <iostream>
