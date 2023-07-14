@@ -19,44 +19,24 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#if !defined(PARSELO_TOPLEVEL_WINDOW_HH)
-#define PARSELO_TOPLEVEL_WINDOW_HH
+#if !defined(PARSELO_CONTAINERS_PREFERENCES_HH)
+#define PARSELO_CONTAINERS_PREFERENCES_HH
 
-#include "components/about.hh"
-#include "components/inquiry.hh"
-#include "components/preferences.hh"
-#include <glibmm/ustring.h>
-#include <gtkmm/box.h>
-#include <gtkmm/headerbar.h>
-#include <gtkmm/notebook.h>
-#include <gtkmm/widget.h>
-#include <gtkmm/window.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/label.h>
 
 namespace parselo
 {
-  class AppWindow : public Gtk::Window
+  class Preferences : public Gtk::Frame
   {
   public:
-    AppWindow ();
-    virtual ~AppWindow ();
-
-#if defined(DEBUG)
-    Glib::ustring getNameOfActivePage ();
-    Glib::ustring getNameOfPageAtIndex (uint8_t index);
-#endif
+    Preferences ();
+    virtual ~Preferences ();
 
   protected:
-    void onNotebookSwitchPage (Gtk::Widget *page, guint page_num);
-    bool onEscapeKeyPressed (guint keyval, guint keycode,
-                             Gdk::ModifierType state);
-
-    Gtk::HeaderBar m_header_bar;
-    Gtk::Box m_vbox;
-    Gtk::Notebook m_notebook;
-    About m_about;
-    Inquiry m_inquiry;
-    Preferences m_preferences;
+    Gtk::Label m_label;
   };
+
 } // namespace parselo
 
-#endif // PARSELO_TOPLEVEL_WINDOW_HH
+#endif // PARSELO_CONTAINERS_PREFERENCES_HH

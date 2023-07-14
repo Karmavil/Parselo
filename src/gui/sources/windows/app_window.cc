@@ -20,9 +20,9 @@
 *************************************************************************/
 
 #include "windows/app_window.hh"
-#include "components/notebooks/pages/about.hh"
-#include "components/notebooks/pages/inquiry.hh"
-#include "components/notebooks/pages/preferences.hh"
+#include "components/about.hh"
+#include "components/inquiry.hh"
+#include "components/preferences.hh"
 #include <gtkmm/eventcontrollerkey.h>
 #include <gtkmm/label.h>
 #include <iostream>
@@ -49,34 +49,26 @@ parselo::AppWindow::AppWindow ()
   auto controller = Gtk::EventControllerKey::create ();
   add_controller (controller);
   controller->signal_key_pressed ().connect (
-      sigc::mem_fun (*this, &parselo::AppWindow::on_escape_key_pressed),
-      false);
+      sigc::mem_fun (*this, &parselo::AppWindow::onEscapeKeyPressed), false);
 
-  set_child (m_VBox);
-  m_VBox.set_orientation (Gtk::Orientation::VERTICAL);
+  set_child (m_vbox);
+  m_vbox.set_orientation (Gtk::Orientation::VERTICAL);
 
-  m_VBox.append (m_Notebook);
-  m_Notebook.set_margin (10);
-  m_Notebook.set_expand ();
-
-  auto about = Gtk::make_managed<About> ();
-  m_Notebook.append_page (*about, "About");
-
-  auto inquiries = Gtk::make_managed<Inquiry> ();
-  m_Notebook.append_page (*inquiries, "Inquiry");
-
-  auto preferences = Gtk::make_managed<Preferences> ();
-  m_Notebook.append_page (*preferences, "Preferences");
-
-  m_Notebook.signal_switch_page ().connect (
-      sigc::mem_fun (*this, &AppWindow::on_notebook_switch_page));
+  m_vbox.append (m_notebook);
+  m_notebook.set_margin (10);
+  m_notebook.set_expand ();
+  m_notebook.append_page (m_about, "About");
+  m_notebook.append_page (m_inquiry, "Inquiry");
+  m_notebook.append_page (m_preferences, "Preferences");
+  m_notebook.signal_switch_page ().connect (
+      sigc::mem_fun (*this, &AppWindow::onNotebookSwitchPage));
 }
 
 parselo::AppWindow::~AppWindow () {}
 
 bool
-parselo::AppWindow::on_escape_key_pressed (guint keyval, guint keycode,
-                                           Gdk::ModifierType state)
+parselo::AppWindow::onEscapeKeyPressed (guint keyval, guint keycode,
+                                        Gdk::ModifierType state)
 {
   if (keyval == GDK_KEY_Escape)
     this->close ();
@@ -111,9 +103,9 @@ parselo::AppWindow::on_escape_key_pressed (guint keyval, guint keycode,
 }
 
 void
-parselo::AppWindow::on_notebook_switch_page (Gtk::Widget *page, guint page_num)
+parselo::AppWindow::onNotebookSwitchPage (Gtk::Widget *page, guint page_num)
 {
-  // auto label = m_Notebook.get_tab_label (*page);
+  // auto label = m_notebook.get_tab_label (*page);
   // Glib::ustring label_text = ((Gtk::Label *)label)->get_text ();
   // TODO: if page == "Inquiry" save buffer
   //
@@ -128,7 +120,7 @@ parselo::AppWindow::on_notebook_switch_page (Gtk::Widget *page, guint page_num)
 Glib::ustring
 parselo::AppWindow::getNameOfActivePage ()
 {
-  auto idx = m_Notebook.get_current_page ();
+  auto idx = m_notebook.get_current_page ();
   return getNameOfPageAtIndex (idx);
 }
 #endif
@@ -137,8 +129,8 @@ parselo::AppWindow::getNameOfActivePage ()
 Glib::ustring
 parselo::AppWindow::getNameOfPageAtIndex (uint8_t index)
 {
-  auto page = m_Notebook.get_nth_page (index);
-  auto label = m_Notebook.get_tab_label (*page);
+  auto page = m_notebook.get_nth_page (index);
+  auto label = m_notebook.get_tab_label (*page);
   auto value = ((Gtk::Label *)label)->get_text ();
   return value;
 }

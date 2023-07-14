@@ -21,37 +21,34 @@
 
 #include "components/buttons/decobutton.hh"
 #include <filesystem>
-#include <gtkmm/box.h>
-#include <gtkmm/image.h>
-#include <gtkmm/label.h>
 
-parselo::DecoButton::DecoButton (std::string btn_name, std::string icon_name)
+parselo::DecoButton::DecoButton (std::string label, std::string icon)
 {
-  set_child (m_Btn);
+  set_child (m_btn);
 
   // TODO: This is gonna be a problem. Implement a path dispatcher.
   // (There are gonna be different type of resources to read & write)
   auto filepath = "";
-  if (icon_name == "document-open")
+  if (icon == "document-open")
     filepath = "src/gui/resources/document-open.png";
-  else if (icon_name == "edit-paste")
+  else if (icon == "edit-paste")
     filepath = "src/gui/resources/edit-paste.png";
 
   std::filesystem::directory_entry entry{ filepath };
   std::filesystem::path fpath = std::filesystem::absolute (entry.path ());
 
-  auto pmap = Gtk::make_managed<Gtk::Image> (fpath);
-  auto label = Gtk::make_managed<Gtk::Label> (" " + btn_name);
+  m_icon.set (fpath);
+  m_label.set_label (" " + label);
 
-  auto hBoxBtn = Gtk::make_managed<Gtk::Box> (Gtk::Orientation::HORIZONTAL);
-  hBoxBtn->append (*pmap);
-  hBoxBtn->append (*label);
+  m_hbox.set_orientation (Gtk::Orientation::HORIZONTAL);
+  m_hbox.append (m_icon);
+  m_hbox.append (m_label);
 
-  m_Btn.set_child (*hBoxBtn);
-  m_Btn.set_margin (10);
-  m_Btn.set_expand (false);
+  m_btn.set_child (m_hbox);
+  m_btn.set_margin (10);
+  m_btn.set_expand (false);
 
-  m_Btn.signal_clicked ().connect (
+  m_btn.signal_clicked ().connect (
       sigc::mem_fun (*this, &DecoButton::onButtonClicked));
 }
 

@@ -19,24 +19,41 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#if !defined(PARSELO_CONTAINERS_ABOUT_HH)
-#define PARSELO_CONTAINERS_ABOUT_HH
+#include "components/inquiry.hh"
+#include <iostream>
 
-#include <gtkmm/frame.h>
-#include <gtkmm/label.h>
-
-namespace parselo
+parselo::Inquiry::Inquiry ()
+    : m_btn_open_file ("Open file", "document-open"),
+      m_btn_paste ("Paste", "edit-paste")
 {
-  class About : public Gtk::Frame
-  {
-  public:
-    About ();
-    virtual ~About ();
+  set_child (m_vbox);
 
-  protected:
-    Gtk::Label m_Label;
-  };
+  m_btn_open_file.onBtnClicked ().connect (
+      sigc::mem_fun (*this, &Inquiry::onOpenFileButtonClicked));
 
-} // namespace parselo
+  m_btn_paste.onBtnClicked ().connect (
+      sigc::mem_fun (*this, &Inquiry::onPasteButtonClicked));
 
-#endif // PARSELO_CONTAINERS_ABOUT_HH
+  m_hbox.set_orientation (Gtk::Orientation::HORIZONTAL);
+  m_hbox.append (m_btn_open_file);
+  m_hbox.append (m_btn_paste);
+
+  m_vbox.set_orientation (Gtk::Orientation::VERTICAL);
+  m_vbox.append (m_hbox);
+  m_vbox.append (m_label);
+  m_label.set_text ("Inquiries are made here");
+}
+
+parselo::Inquiry::~Inquiry () {}
+
+void
+parselo::Inquiry::onOpenFileButtonClicked ()
+{
+  std::cout << "File requested" << std::endl;
+}
+
+void
+parselo::Inquiry::onPasteButtonClicked ()
+{
+  std::cout << "Paste contents" << std::endl;
+}

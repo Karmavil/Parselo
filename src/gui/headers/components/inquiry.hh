@@ -22,8 +22,8 @@
 #if !defined(PARSELO_CONTAINERS_INQUIRY_HH)
 #define PARSELO_CONTAINERS_INQUIRY_HH
 
+#include "components/buttons/decobutton.hh"
 #include <gtkmm/box.h>
-#include <gtkmm/button.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/label.h>
 
@@ -39,9 +39,11 @@ namespace parselo
     void onOpenFileButtonClicked ();
     void onPasteButtonClicked ();
 
-    Gtk::Box m_HBox;
-    Gtk::Box m_VBox;
-    Gtk::Label m_Label;
+    Gtk::Box m_hbox;
+    Gtk::Box m_vbox;
+    Gtk::Label m_label;
+    DecoButton m_btn_open_file;
+    DecoButton m_btn_paste;
   };
 
 } // namespace parselo

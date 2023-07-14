@@ -30,6 +30,8 @@ project(Parselo
     LANGUAGES CXX
 )
 
+message("CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
+
 # Control where the static and shared libraries are built
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")

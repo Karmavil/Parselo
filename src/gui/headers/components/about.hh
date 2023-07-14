@@ -19,12 +19,24 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#include "components/notebooks/pages/preferences.hh"
+#if !defined(PARSELO_CONTAINERS_ABOUT_HH)
+#define PARSELO_CONTAINERS_ABOUT_HH
 
-parselo::Preferences::Preferences ()
+#include <gtkmm/frame.h>
+#include <gtkmm/label.h>
+
+namespace parselo
 {
-  m_Label.set_text ("And here you set your Preferences");
-  set_child (m_Label);
-}
+  class About : public Gtk::Frame
+  {
+  public:
+    About ();
+    virtual ~About ();
 
-parselo::Preferences::~Preferences () {}
+  protected:
+    Gtk::Label m_label;
+  };
+
+} // namespace parselo
+
+#endif // PARSELO_CONTAINERS_ABOUT_HH

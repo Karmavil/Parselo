@@ -22,8 +22,11 @@
 #if !defined(PARSELO_CONTAINERS_CMPBUTTON_HH)
 #define PARSELO_CONTAINERS_CMPBUTTON_HH
 
+#include <gtkmm/box.h>
 #include <gtkmm/button.h>
 #include <gtkmm/frame.h>
+#include <gtkmm/image.h>
+#include <gtkmm/label.h>
 
 namespace parselo
 {
@@ -40,7 +43,10 @@ namespace parselo
     void onButtonClicked ();
 
     DecoButtonSignal m_btn_clicked;
-    Gtk::Button m_Btn;
+    Gtk::Button m_btn;
+    Gtk::Box m_hbox;
+    Gtk::Image m_icon;
+    Gtk::Label m_label;
   };
 } // namespace
 
