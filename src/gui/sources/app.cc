@@ -72,8 +72,8 @@ Parselo::App::on_startup ()
   set_accel_for_action ("win.paste", "<Ctrl>v");
   set_accel_for_action ("win.new_doc", "<Ctrl>n");
 
-  std::string resource = "/com/terifel/Parselo/uixml/toolbar_model.ui";
-  std::string node = "toolbar";
+  std::string resource = "/com/terifel/Parselo/uixml/window_menu.ui";
+  std::string node = "winmenu";
   try
     {
       m_refBuilder->add_from_resource (resource);

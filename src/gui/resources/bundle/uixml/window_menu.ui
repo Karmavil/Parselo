@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
     <!-- menubar -->
-    <menu id="toolbar">
+    <menu id="winmenu">
         <submenu>
             <attribute name="label" translatable="yes">_File</attribute>
             <section>

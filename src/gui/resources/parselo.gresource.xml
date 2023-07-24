@@ -8,9 +8,9 @@
         <file>images/preferences.png</file>
         <file>parselo.desktop.in</file>
         <file compressed="true">uixml/window.ui</file>
+        <file compressed="true">uixml/window_menu.ui</file>
         <file compressed="true">uixml/headerbar_menu.ui</file>
         <file compressed="true">uixml/toolbar.ui</file>
-        <file compressed="true">uixml/toolbar_model.ui</file>
         <file compressed="true">uixml/shortcuts.ui</file>
         <file compressed="true">uixml/about.ui</file>
     </gresource>
