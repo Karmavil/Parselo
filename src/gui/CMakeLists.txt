@@ -17,7 +17,7 @@
 #  with this program; if not, write to the Free Software Foundation, Inc.,
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-set(LIB_SOURCES ./sources/components/about.cc ./sources/components/preferences.cc ./sources/components/inquiry.cc ./sources/components/buttons/decobutton.cc ./sources/windows/app_window.cc)
+set(LIB_SOURCES ./sources/components/contextual_menu.cc ./sources/components/about.cc ./sources/components/preferences.cc ./sources/components/toolbar.cc ./sources/components/headerbar_menu.cc ./sources/components/starter.cc ./sources/components/inquiry.cc ./sources/components/buttons/decobutton.cc ./sources/app.cc ./sources/windows/appwindow.cc)
 
 set(LIBNAME parselo_interface)
 
@@ -29,6 +29,11 @@ add_library(${LIBNAME} STATIC ${LIB_SOURCES})
 target_include_directories(${LIBNAME} PUBLIC ./headers ${GTKmm_INCLUDE_DIRS})
 target_link_directories(${LIBNAME} PUBLIC ${GTKmm_LIBRARY_DIRS})
 target_link_libraries(${LIBNAME} PUBLIC ${GTKmm_LIBRARIES})
+target_compile_definitions(
+    ${LIBNAME} PRIVATE 
+        RESOURCES="src/gui/resources/"
+        VERSION="${CMAKE_PROJECT_VERSION}"
+)
 
 if(NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     target_link_directories(${LIBNAME} PUBLIC Threads::Threads)

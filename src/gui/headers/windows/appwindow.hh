@@ -19,27 +19,48 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#if !defined(PARSELO_COMPONENTS_PREFERENCES_HH)
-#define PARSELO_COMPONENTS_PREFERENCES_HH
+#if !defined(PARSELO_WINDOWS_APPWINDOW_HH)
+#define PARSELO_WINDOWS_APPWINDOW_HH
 
-#include <gtkmm/aboutdialog.h>
+#include "components/contextual_menu.hh"
+#include "components/headerbar_menu.hh"
+#include "components/inquiry.hh"
+#include "components/toolbar.hh"
+#include <gtkmm/applicationwindow.h>
 #include <gtkmm/builder.h>
+#include <gtkmm/headerbar.h>
+#include <gtkmm/window.h>
 
 namespace Parselo
 {
-  class Preferences : public Gtk::AboutDialog
+  class AppWindow : public Gtk::ApplicationWindow
   {
   public:
-    Preferences (BaseObjectType *cobject,
-                 const Glib::RefPtr<Gtk::Builder> &refBuilder);
-    static Preferences *create ();
+    AppWindow (BaseObjectType *cobject,
+               const Glib::RefPtr<Gtk::Builder> &refBuilder);
+
+    static AppWindow *create ();
+
+    void open_file_view (const Glib::RefPtr<Gio::File> &file);
 
   protected:
+    void on_quick_test (int n, double x, double y);
+    void on_action_close ();
+    void on_action_copy ();
+    void on_action_paste ();
+    void on_action_new_doc ();
     bool on_esc_key_pressed (guint, guint, Gdk::ModifierType);
 
     Glib::RefPtr<Gtk::Builder> m_refBuilder;
-  };
+    ContextualMenu m_cttl_menu;
+    Gtk::HeaderBar m_headerbar;
+    HeaderBarMenu m_headerbar_menu;
+    Inquiry m_inquiry;
+    Toolbar *m_toolbar;
 
+  private:
+    bool on_not_implemented (Gdk::ModifierType);
+  };
 } // namespace Parselo
 
-#endif // PARSELO_COMPONENTS_PREFERENCES_HH
+#endif // PARSELO_WINDOWS_APPWINDOW_HH

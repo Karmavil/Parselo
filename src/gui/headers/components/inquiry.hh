@@ -19,15 +19,16 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#if !defined(PARSELO_CONTAINERS_INQUIRY_HH)
-#define PARSELO_CONTAINERS_INQUIRY_HH
+#if !defined(PARSELO_COMPONENTS_INQUIRY_HH)
+#define PARSELO_COMPONENTS_INQUIRY_HH
 
 #include "components/buttons/decobutton.hh"
+#include "components/contextual_menu.hh"
 #include <gtkmm/box.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/label.h>
 
-namespace parselo
+namespace Parselo
 {
   class Inquiry : public Gtk::Frame
   {
@@ -38,14 +39,16 @@ namespace parselo
   protected:
     void onOpenFileButtonClicked ();
     void onPasteButtonClicked ();
+    void onQuickTest (int n, double x, double y);
 
+    ContextualMenu m_cttl_menu;
     Gtk::Box m_hbox;
     Gtk::Box m_vbox;
     Gtk::Label m_label;
     DecoButton m_btn_open_file;
-    DecoButton m_btn_paste;
+    DecoButton m_btn_paste_log;
   };
 
-} // namespace parselo
+} // namespace Parselo
 
-#endif // PARSELO_CONTAINERS_INQUIRY_HH
+#endif // PARSELO_COMPONENTS_INQUIRY_HH

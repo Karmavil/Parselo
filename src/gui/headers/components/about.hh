@@ -19,24 +19,28 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#if !defined(PARSELO_CONTAINERS_ABOUT_HH)
-#define PARSELO_CONTAINERS_ABOUT_HH
+#if !defined(PARSELO_COMPONENTS_ABOUT_HH)
+#define PARSELO_COMPONENTS_ABOUT_HH
 
+#include <gtkmm/aboutdialog.h>
+#include <gtkmm/builder.h>
 #include <gtkmm/frame.h>
-#include <gtkmm/label.h>
 
-namespace parselo
+namespace Parselo
 {
-  class About : public Gtk::Frame
+  class About : public Gtk::AboutDialog
   {
   public:
-    About ();
-    virtual ~About ();
+    About (BaseObjectType *cobject,
+           const Glib::RefPtr<Gtk::Builder> &refBuilder);
+    static About *create ();
 
   protected:
-    Gtk::Label m_label;
+    bool on_esc_key_pressed (guint, guint, Gdk::ModifierType);
+
+    Glib::RefPtr<Gtk::Builder> m_refBuilder;
   };
 
-} // namespace parselo
+} // namespace Parselo
 
-#endif // PARSELO_CONTAINERS_ABOUT_HH
+#endif // PARSELO_COMPONENTS_ABOUT_HH

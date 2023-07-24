@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <object class="GtkShortcutsWindow" id="shortcuts_boxes">
+        <property name="modal">1</property>
+        <child>
+            <object class="GtkShortcutsSection">
+                <property name="section-name">shortcuts</property>
+                <property name="max-height">12</property>
+                <!-- Overview shortcuts -->
+                <child>
+                    <object class="GtkShortcutsGroup">
+                        <property name="title" translatable="yes">Overview</property>
+                        <property name="view">overview</property>
+                        <child>
+                            <object class="GtkShortcutsShortcut">
+                                <property name="accelerator">F1</property>
+                                <property name="title" translatable="yes">Help</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkShortcutsShortcut">
+                                <property name="accelerator">&lt;Ctrl&gt;q</property>
+                                <property name="title" translatable="yes">Close window</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkShortcutsShortcut">
+                                <property name="accelerator">&lt;Ctrl&gt;c</property>
+                                <property name="title" translatable="yes">Copy</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkShortcutsShortcut">
+                                <property name="accelerator">&lt;Ctrl&gt;v</property>
+                                <property name="title" translatable="yes">Paste</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </object>
+
+</interface>

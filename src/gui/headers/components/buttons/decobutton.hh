@@ -19,35 +19,37 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#if !defined(PARSELO_CONTAINERS_CMPBUTTON_HH)
-#define PARSELO_CONTAINERS_CMPBUTTON_HH
+#if !defined(PARSELO_COMPONENTS_CMPBUTTON_HH)
+#define PARSELO_COMPONENTS_CMPBUTTON_HH
 
+#include <glibmm/ustring.h>
 #include <gtkmm/box.h>
 #include <gtkmm/button.h>
-#include <gtkmm/frame.h>
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
 
-namespace parselo
+namespace Parselo
 {
-  class DecoButton : public Gtk::Frame
+  class DecoButton : public Gtk::Button
   {
   public:
-    DecoButton (std::string btn_name, std::string icon_name);
+    DecoButton ();
     virtual ~DecoButton ();
 
     using DecoButtonSignal = sigc::signal<void ()>;
     DecoButtonSignal onBtnClicked ();
 
+    void setLabel (Glib::ustring text_or_emoji);
+    void setIcon (std::string icon_name);
+
   protected:
     void onButtonClicked ();
 
     DecoButtonSignal m_btn_clicked;
-    Gtk::Button m_btn;
     Gtk::Box m_hbox;
     Gtk::Image m_icon;
     Gtk::Label m_label;
   };
 } // namespace
 
-#endif // PARSELO_CONTAINERS_CMPBUTTON_HH
+#endif // PARSELO_COMPONENTS_CMPBUTTON_HH

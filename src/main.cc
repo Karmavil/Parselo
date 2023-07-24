@@ -19,12 +19,12 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#include "windows/app_window.hh"
+#include "app.hh"
 #include <gtkmm/application.h>
 
 int
 main (int argc, char *argv[])
 {
-  auto app = Gtk::Application::create ("com.terifel.parselo");
-  return app->make_window_and_run<parselo::AppWindow> (argc, argv);
+  auto application = Parselo::App::create ();
+  return application->run (argc, argv);
 }

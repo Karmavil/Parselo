@@ -19,27 +19,9 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#if !defined(PARSELO_COMPONENTS_PREFERENCES_HH)
-#define PARSELO_COMPONENTS_PREFERENCES_HH
+#include "components/toolbar.hh"
+#include <glibmm/ustring.h>
 
-#include <gtkmm/aboutdialog.h>
-#include <gtkmm/builder.h>
+Parselo::Toolbar::Toolbar () {}
 
-namespace Parselo
-{
-  class Preferences : public Gtk::AboutDialog
-  {
-  public:
-    Preferences (BaseObjectType *cobject,
-                 const Glib::RefPtr<Gtk::Builder> &refBuilder);
-    static Preferences *create ();
-
-  protected:
-    bool on_esc_key_pressed (guint, guint, Gdk::ModifierType);
-
-    Glib::RefPtr<Gtk::Builder> m_refBuilder;
-  };
-
-} // namespace Parselo
-
-#endif // PARSELO_COMPONENTS_PREFERENCES_HH
+Parselo::Toolbar::~Toolbar () {}

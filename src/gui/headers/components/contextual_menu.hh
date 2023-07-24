@@ -19,27 +19,47 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#if !defined(PARSELO_COMPONENTS_PREFERENCES_HH)
-#define PARSELO_COMPONENTS_PREFERENCES_HH
+#if !defined(PARSELO_COMPONENTS_CONTEXTUAL_MENU_HH)
+#define PARSELO_COMPONENTS_CONTEXTUAL_MENU_HH
 
-#include <gtkmm/aboutdialog.h>
+#include <giomm/simpleactiongroup.h>
+#include <glibmm/refptr.h>
+#include <glibmm/ustring.h>
 #include <gtkmm/builder.h>
+#include <gtkmm/gestureclick.h>
+#include <gtkmm/popovermenu.h>
+#include <gtkmm/widget.h>
+#include <gtkmm/window.h>
+#include <memory>
+#include <vector>
 
 namespace Parselo
 {
-  class Preferences : public Gtk::AboutDialog
+  class ContextualMenu
   {
   public:
-    Preferences (BaseObjectType *cobject,
-                 const Glib::RefPtr<Gtk::Builder> &refBuilder);
-    static Preferences *create ();
+    ContextualMenu (Gtk::Widget *target_widget);
+    virtual ~ContextualMenu ();
+
+    using CttlMenuSignal
+        = sigc::signal<void (int n_press, double x, double y)>;
+    CttlMenuSignal onActionSelected ();
+
+    Glib::RefPtr<Gio::SimpleActionGroup>
+    createActions (std::vector<Glib::ustring> &actions);
 
   protected:
-    bool on_esc_key_pressed (guint, guint, Gdk::ModifierType);
+    CttlMenuSignal m_item_selected;
+    Gtk::PopoverMenu m_menu_popup;
+    Glib::RefPtr<Gtk::Builder> m_ref_builder;
+    Glib::RefPtr<Gtk::GestureClick> m_ref_gesture;
 
-    Glib::RefPtr<Gtk::Builder> m_refBuilder;
+  private:
+    void onSelection (int n_press, double x, double y);
+
+    std::vector<Glib::ustring> _actions;
+    Glib::RefPtr<Gio::SimpleActionGroup> _ref_action_group;
   };
+} // namespace
 
-} // namespace Parselo
-
-#endif // PARSELO_COMPONENTS_PREFERENCES_HH
+#endif // PARSELO_COMPONENTS_CONTEXTUAL_MENU_HH

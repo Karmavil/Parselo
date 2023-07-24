@@ -19,44 +19,40 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#if !defined(PARSELO_TOPLEVEL_WINDOW_HH)
-#define PARSELO_TOPLEVEL_WINDOW_HH
+#if !defined(PARSELO_HEADERBAR_MENU_HH)
+#define PARSELO_HEADERBAR_MENU_HH
 
 #include "components/about.hh"
-#include "components/inquiry.hh"
 #include "components/preferences.hh"
-#include <glibmm/ustring.h>
+#include <giomm/menu.h>
 #include <gtkmm/box.h>
-#include <gtkmm/headerbar.h>
-#include <gtkmm/notebook.h>
-#include <gtkmm/widget.h>
+#include <gtkmm/builder.h>
+#include <gtkmm/button.h>
+#include <gtkmm/popovermenu.h>
 #include <gtkmm/window.h>
 
-namespace parselo
+namespace Parselo
 {
-  class AppWindow : public Gtk::Window
+  class HeaderBarMenu : public Gtk::Box
   {
   public:
-    AppWindow ();
-    virtual ~AppWindow ();
-
-#if defined(DEBUG)
-    Glib::ustring getNameOfActivePage ();
-    Glib::ustring getNameOfPageAtIndex (uint8_t index);
-#endif
+    HeaderBarMenu (Gtk::Window *parent);
+    ~HeaderBarMenu ();
 
   protected:
-    void onNotebookSwitchPage (Gtk::Widget *page, guint page_num);
-    bool onEscapeKeyPressed (guint keyval, guint keycode,
-                             Gdk::ModifierType state);
+    void on_expand_headerbar_menu_clicked ();
+    void onAboutActionSelected ();
+    void onPreferencesActionSelected ();
 
-    Gtk::HeaderBar m_header_bar;
-    Gtk::Box m_vbox;
-    Gtk::Notebook m_notebook;
-    About m_about;
-    Inquiry m_inquiry;
-    Preferences m_preferences;
+    Glib::RefPtr<Gtk::Builder> m_refBuilder;
+    Gtk::Button m_button;
+    Gtk::PopoverMenu m_popover_menu;
+    About *m_about;
+    Preferences *m_preferences;
+
+  private:
+    Gtk::Window *_parent;
   };
-} // namespace parselo
+} // namespace
 
-#endif // PARSELO_TOPLEVEL_WINDOW_HH
+#endif // PARSELO_HEADERBAR_MENU_HH

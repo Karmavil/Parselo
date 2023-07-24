@@ -27,10 +27,8 @@ endif (POLICY CMP0066)
 project(Parselo 
     VERSION 0.1.0 
     HOMEPAGE_URL https://www.terifel.com/parselo  
-    LANGUAGES CXX
+    LANGUAGES C CXX
 )
-
-message("CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
 # Control where the static and shared libraries are built
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
@@ -43,7 +41,7 @@ pkg_check_modules(GTKmm REQUIRED gtkmm-4.0)
 
 add_subdirectory(src/gui)
 
-set(SOURCES src/main.cc)
+set(SOURCES src/parselo.c src/main.cc)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ./include src/gui/headers ${GTKmm_INCLUDE_DIRS})
@@ -52,8 +50,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE parselo_interface ${GTKmm_LIBRARIE
 
 
 # Testing
-enable_testing()
-if(CMAKE_TESTING_ENABLED)
+if(BUILD_TESTING)
     if (POLICY CMP0110)
         cmake_policy(SET CMP0110 NEW)
     endif (POLICY CMP0110)

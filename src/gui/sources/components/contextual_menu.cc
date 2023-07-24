@@ -19,48 +19,44 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#include "components/buttons/decobutton.hh"
-#include <filesystem>
+#include "components/contextual_menu.hh"
 #include <iostream>
+#include <string>
 
-Parselo::DecoButton::DecoButton ()
+Parselo::ContextualMenu::ContextualMenu (Gtk::Widget *target_widget)
 {
-  set_margin (10);
-  set_expand (false);
-  signal_clicked ().connect (
-      sigc::mem_fun (*this, &DecoButton::onButtonClicked));
-  set_child (m_hbox);
-  m_hbox.set_orientation (Gtk::Orientation::HORIZONTAL);
-  m_hbox.append (m_icon);
-  m_hbox.append (m_label);
+  _ref_action_group = Gio::SimpleActionGroup::create ();
+  m_ref_gesture = Gtk::GestureClick::create ();
+  m_ref_gesture->set_button (GDK_BUTTON_SECONDARY);
+  m_ref_gesture->signal_pressed ().connect (
+      sigc::mem_fun (*this, &Parselo::ContextualMenu::onSelection));
+  target_widget->add_controller (m_ref_gesture);
 }
 
-Parselo::DecoButton::~DecoButton () {}
+Parselo::ContextualMenu::~ContextualMenu () {}
 
-void
-Parselo::DecoButton::setLabel (Glib::ustring text_or_emoji)
+Glib::RefPtr<Gio::SimpleActionGroup>
+Parselo::ContextualMenu::createActions (std::vector<Glib::ustring> &actions)
 {
-  m_label.set_label (text_or_emoji);
-}
-
-void
-Parselo::DecoButton::setIcon (std::string icon_name)
-{
-  // Creates an absolute path to the image resource
-  m_icon.clear ();
-  std::string resource = "/com/terifel/Parselo/images/";
-  resource += icon_name + ".png";
-  m_icon.set_from_resource (resource);
+  for (auto &&item : actions)
+    {
+      std::cout << "Action: " << item << std::endl;
+      //_ref_action_group->add_action (
+      //    item,
+      //    sigc::mem_fun (*this, &Parselo::ContextualMenu::onActionSelected));
+    }
+  m_ref_builder = Gtk::Builder::create ();
+  return _ref_action_group;
 }
 
 void
-Parselo::DecoButton::onButtonClicked ()
+Parselo::ContextualMenu::onSelection (int n_press, double x, double y)
 {
-  m_btn_clicked.emit ();
+  m_item_selected.emit (n_press, x, y);
 }
 
-Parselo::DecoButton::DecoButtonSignal
-Parselo::DecoButton::onBtnClicked ()
+Parselo::ContextualMenu::CttlMenuSignal
+Parselo::ContextualMenu::onActionSelected ()
 {
-  return m_btn_clicked;
+  return m_item_selected;
 }

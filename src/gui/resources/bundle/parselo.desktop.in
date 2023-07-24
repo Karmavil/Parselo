@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Parselo
+GenericName=Parselo
+Comment=Reads specific logs from the journal and let the user tweak the presentation
+Icon=parselo_app_icon
+StartupNotify=true
+Exec=@bindir@/parselo %U
+Categories=GNOME;GTK;Utility
+

@@ -1,3 +1,9 @@
+# Glib compile resources (output)
+*/parselo.h
+parselo.h
+*/parselo.c
+parselo.c
+
 # Prerequisites
 *.d
 

@@ -18,28 +18,25 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
+// This class was extracted entirely from the documentation:
+// https://gnome.pages.gitlab.gnome.org/gtkmm-documentation/sec-custom-css-names.html
+// So I think the license for this section is not out of place but it is
+// for sure that it should not mention me in the copyright. It is here
+// however for future modifications of this source
 
-#if !defined(PARSELO_COMPONENTS_PREFERENCES_HH)
-#define PARSELO_COMPONENTS_PREFERENCES_HH
+#if !defined(PARSELO_COMPONENTS_STARTER_HH)
+#define PARSELO_COMPONENTS_STARTER_HH
 
-#include <gtkmm/aboutdialog.h>
-#include <gtkmm/builder.h>
+#include <glibmm/extraclassinit.h>
+#include <glibmm/ustring.h>
 
-namespace Parselo
+// Calls gtk_widget_class_set_css_name() in the class init function.
+class Starter : public Glib::ExtraClassInit
 {
-  class Preferences : public Gtk::AboutDialog
-  {
-  public:
-    Preferences (BaseObjectType *cobject,
-                 const Glib::RefPtr<Gtk::Builder> &refBuilder);
-    static Preferences *create ();
+public:
+  Starter (const Glib::ustring &css_name);
 
-  protected:
-    bool on_esc_key_pressed (guint, guint, Gdk::ModifierType);
-
-    Glib::RefPtr<Gtk::Builder> m_refBuilder;
-  };
-
-} // namespace Parselo
-
-#endif // PARSELO_COMPONENTS_PREFERENCES_HH
+private:
+  Glib::ustring m_css_name;
+};
+#endif // PARSELO_COMPONENTS_STARTER_HH

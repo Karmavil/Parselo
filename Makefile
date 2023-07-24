@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 #  Parselo - Query the journal about your progam.
 #  Copyright (C) 2023 Federico Gallo Herosa. https://www.terifel.com
 #  Find the full description of the license in the following URL:
@@ -23,6 +21,7 @@
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 BUILD_TYPE=Debug
 JOBS=-j4
+TESTING=ON
 PFIX=`if [ ${VIRTUAL_ENV} ]; then echo ${VIRTUAL_ENV}; else echo /usr; fi`
 SUPP_GTK=${PFIX}/share/gtk-4.0/valgrind/gtk.supp
 SUPP_GLIB=${PFIX}/share/glib-2.0/valgrind/glib.supp
@@ -31,7 +30,7 @@ MORE_ABOUT_DEPRECATIONS="https://gnome.pages.gitlab.gnome.org/gtkmm-documentatio
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: all
-all: build format compile test warn-deprecations run
+all: build format compile warn-deprecations test run
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: clean
@@ -41,15 +40,27 @@ clean:
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: format
 format:
-	@clang-format -i `find include/ -type f -name *.hh` src/main.cc # (added main.cc because while writing this note the include folder is empty)
+	@clang-format -i `find include/ -type f -name *.hh` src/main.cc
 	@clang-format -i `find src/ -type f -name *.hh`
 	@clang-format -i `find src/ -type f -name *.cc`
 	@clang-format -i `find test/ -type f -name *.cc`
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
+.PHONY: compile-glib-resources
+compile-glib-resources:
+	@glib-compile-resources src/gui/resources/parselo.gresource.xml \
+		--generate-header \
+		--sourcedir=src/gui/resources/bundle \
+		&& mv src/gui/resources/parselo.h include
+	@glib-compile-resources src/gui/resources/parselo.gresource.xml \
+		--generate-source \
+		--sourcedir=src/gui/resources/bundle \
+		&& mv src/gui/resources/parselo.c src/
+
+#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: update-sources-list
-update-sources-list:
-	@SOURCES=`find src/ -type f -name *.cc -not -path "src/gui/*"` \
+update-sources-list: compile-glib-resources
+	@SOURCES=`find src/ -type f -regex .+\.cc? -not -path "src/gui/*"` \
 		&& sed -i -E -e \
 			"s%set\((SOURCES)[^)]*\)%set(\1 `echo $$SOURCES`)%" \
 			CMakeLists.txt
@@ -64,7 +75,10 @@ update-sources-list:
 build: update-sources-list
 	@mkdir -p build && \
 		cd build && \
-		cmake -DCMAKE_BUILD_TYPE:STRING=${BUILD_TYPE} ..
+		cmake \
+			-DCMAKE_BUILD_TYPE:STRING=${BUILD_TYPE} \
+			-DBUILD_TESTING=${TESTING} \
+			..
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: rebuild

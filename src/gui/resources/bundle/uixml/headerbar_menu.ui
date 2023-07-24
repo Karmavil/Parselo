@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <menu id="popup-menu">
+        <section>
+            <item>
+                <attribute name="label" translatable="yes">Preferences</attribute>
+                <attribute name="action">win.preferences</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label" translatable="yes">About</attribute>
+                <attribute name="action">win.about</attribute>
+            </item>
+        </section>
+    </menu>
+</interface>

@@ -19,52 +19,38 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *************************************************************************/
 
-#include "app.hh"
+#if !defined(PARSELO_APP_HH)
+#define PARSELO_APP_HH
+
 #include "windows/appwindow.hh"
-#include "gtest/gtest.h"
+#include <giomm/application.h>
+#include <glibmm/ustring.h>
 #include <gtkmm/application.h>
-#include <iostream>
+#include <gtkmm/builder.h>
+#include <gtkmm/window.h>
 
-namespace parselo
+namespace Parselo
 {
-  namespace
+  class App : public Gtk::Application
   {
-    class AppWindowTest : public ::testing::Test
-    {
-    protected:
-      Glib::RefPtr<Parselo::App> m_app;
-      Parselo::AppWindow *m_window;
-      AppWindowTest ()
-      {
-        // m_App = Gtk::Application::create ("com.terifel.parselo");
-        // m_App->run ();
-        m_app = Parselo::App::create ();
-        m_window = Parselo::AppWindow::create ();
-      }
-      ~AppWindowTest () override
-      {
-        // Calls ~MainWindow
-        // delete m_window;
-        m_window->hide ();
-      }
-    };
+  public:
+    static Glib::RefPtr<App> create ();
 
-    TEST_F (AppWindowTest, AppStarted) { EXPECT_NE (m_app, nullptr); }
+  protected:
+    App ();
+    void on_activate () override;
+    void on_startup () override;
+    void on_open (const Gio::Application::type_vec_files &,
+                  const Glib::ustring &) override;
 
-    TEST_F (AppWindowTest, AppWindowCreated) { EXPECT_NE (m_window, nullptr); }
+  private:
+    void create_appwindow ();
+    void on_hide_window ();
+    void on_quit_from_menu ();
 
-    TEST_F (AppWindowTest, WindowTitleIsAsExpected)
-    {
-      auto title = m_window->get_title ();
-      EXPECT_EQ (title, "Parselo");
-    }
+    Glib::RefPtr<Gtk::Builder> m_refBuilder;
+    AppWindow *_window;
+  };
+} // namespace
 
-  } // namespace
-} // namespace parselo
-
-int
-main (int argc, char **argv)
-{
-  ::testing::InitGoogleTest (&argc, argv);
-  return RUN_ALL_TESTS ();
-}
+#endif //
