@@ -27,39 +27,29 @@
 
 namespace parselo
 {
-  namespace
+  class AppWindowTest : public ::testing::Test
   {
-    class AppWindowTest : public ::testing::Test
+  protected:
+    Glib::RefPtr<Parselo::App> m_app;
+    Parselo::AppWindow *m_window;
+    AppWindowTest ()
     {
-    protected:
-      Glib::RefPtr<Parselo::App> m_app;
-      Parselo::AppWindow *m_window;
-      AppWindowTest ()
-      {
-        // m_App = Gtk::Application::create ("com.terifel.parselo");
-        // m_App->run ();
-        m_app = Parselo::App::create ();
-        m_window = Parselo::AppWindow::create ();
-      }
-      ~AppWindowTest () override
-      {
-        // Calls ~MainWindow
-        // delete m_window;
-        m_window->hide ();
-      }
-    };
-
-    TEST_F (AppWindowTest, AppStarted) { EXPECT_NE (m_app, nullptr); }
-
-    TEST_F (AppWindowTest, AppWindowCreated) { EXPECT_NE (m_window, nullptr); }
-
-    TEST_F (AppWindowTest, WindowTitleIsAsExpected)
-    {
-      auto title = m_window->get_title ();
-      EXPECT_EQ (title, "Parselo");
+      m_app = Parselo::App::create ();
+      m_window = Parselo::AppWindow::create ();
     }
+    ~AppWindowTest () override { m_window->hide (); }
+  };
 
-  } // namespace
+  TEST_F (AppWindowTest, AppStarted) { EXPECT_NE (m_app, nullptr); }
+
+  TEST_F (AppWindowTest, AppWindowCreated) { EXPECT_NE (m_window, nullptr); }
+
+  TEST_F (AppWindowTest, WindowTitleIsAsExpected)
+  {
+    auto title = m_window->get_title ();
+    EXPECT_EQ (title, "Parselo");
+  }
+
 } // namespace parselo
 
 int

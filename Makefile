@@ -40,35 +40,33 @@ clean:
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: format
 format:
-	@clang-format -i `find include/ -type f -name *.hh` src/main.cc
-	@clang-format -i `find src/ -type f -name *.hh`
+	@clang-format -i `find include/ -type f -name *.hh`
 	@clang-format -i `find src/ -type f -name *.cc`
 	@clang-format -i `find test/ -type f -name *.cc`
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: compile-glib-resources
 compile-glib-resources:
-	@glib-compile-resources src/gui/resources/parselo.gresource.xml \
+	@glib-compile-resources src/resources/parselo.gresource.xml \
 		--generate-header \
-		--sourcedir=src/gui/resources/bundle \
-		&& mv src/gui/resources/parselo.h include
-	@glib-compile-resources src/gui/resources/parselo.gresource.xml \
+		--sourcedir=src/resources/bundle \
+		--target=include/parselo.h
+	@glib-compile-resources src/resources/parselo.gresource.xml \
 		--generate-source \
-		--sourcedir=src/gui/resources/bundle \
-		&& mv src/gui/resources/parselo.c src/
+		--sourcedir=src/resources/bundle \
+		--target=src/parselo.c
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: update-sources-list
 update-sources-list: compile-glib-resources
-	@SOURCES=`find src/ -type f -regex .+\.cc? -not -path "src/gui/*"` \
+	@SOURCES=`find src/ -type f -regex .+\.cc?` \
 		&& sed -i -E -e \
 			"s%set\((SOURCES)[^)]*\)%set(\1 `echo $$SOURCES`)%" \
 			CMakeLists.txt
-	@cd src/gui && \
-		LIB_SOURCES=`find . -type f -name *.cc` && \
-		sed -i -E -e \
-			"s%set\((LIB_SOURCES)[^)]*\)%set(\1 `echo $$LIB_SOURCES`)%" \
-			./CMakeLists.txt
+	@TSRC=`find src/ -type f -regex .+\.cc? -not -path src/main.cc` \
+		&& sed -i -E -e \
+			"s%set\((TSRC)[^)]*\)%set(\1 `echo $$TSRC`)%" \
+			CMakeLists.txt
 
 #I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I#I
 .PHONY: build

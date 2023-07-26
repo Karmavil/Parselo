@@ -39,15 +39,13 @@ find_package(Threads)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTKmm REQUIRED gtkmm-4.0)
 
-add_subdirectory(src/gui)
-
-set(SOURCES src/parselo.c src/main.cc)
+set(SOURCES src/components/contextual_menu.cc src/components/about.cc src/components/preferences.cc src/components/toolbar.cc src/components/headerbar_menu.cc src/components/starter.cc src/components/inquiry.cc src/components/buttons/decobutton.cc src/parselo.c src/app.cc src/windows/appwindow.cc src/main.cc)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
-target_include_directories(${PROJECT_NAME} PRIVATE ./include src/gui/headers ${GTKmm_INCLUDE_DIRS})
+target_include_directories(${PROJECT_NAME} PRIVATE include/ ${GTKmm_INCLUDE_DIRS})
 target_link_directories(${PROJECT_NAME} PRIVATE ${GTKmm_LIBRARY_DIRS})
-target_link_libraries(${PROJECT_NAME} PRIVATE parselo_interface ${GTKmm_LIBRARIES})
-
+target_link_libraries(${PROJECT_NAME} PRIVATE ${GTKmm_LIBRARIES})
+target_compile_definitions(${PROJECT_NAME} PRIVATE VERSION="${CMAKE_PROJECT_VERSION}")
 
 # Testing
 if(BUILD_TESTING)
@@ -55,8 +53,15 @@ if(BUILD_TESTING)
         cmake_policy(SET CMP0110 NEW)
     endif (POLICY CMP0110)
 
-    add_subdirectory(dependencies/gtest)
-    add_subdirectory(test)
-    add_test("Init TestParselo" TestParselo)
-endif()
+    set(TESTNAME TestParselo)
+    set(TSRC src/components/contextual_menu.cc src/components/about.cc src/components/preferences.cc src/components/toolbar.cc src/components/headerbar_menu.cc src/components/starter.cc src/components/inquiry.cc src/components/buttons/decobutton.cc src/parselo.c src/app.cc src/windows/appwindow.cc)
+    set(TEST_SOURCES test/unit_tests/main.cc ${TSRC})
 
+    add_subdirectory(dependencies/gtest)
+
+    add_executable(${TESTNAME} ${TEST_SOURCES})
+    target_include_directories(${TESTNAME} PRIVATE include/ ${GTKmm_INCLUDE_DIRS})
+    target_link_directories(${TESTNAME} PRIVATE ${GTKmm_LIBRARY_DIRS})
+    target_link_libraries(${TESTNAME} PRIVATE gtest ${GTKmm_LIBRARIES})
+    target_compile_definitions(${TESTNAME} PRIVATE VERSION="${CMAKE_PROJECT_VERSION}")
+endif()
